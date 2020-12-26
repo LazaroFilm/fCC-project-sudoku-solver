@@ -10,7 +10,7 @@ const runner = require("./test-runner");
 
 const app = express();
 
-console.log("Hello World");
+// console.log("Hello World");
 
 app.use("/public", express.static(process.cwd() + "/public"));
 app.use(cors({ origin: "*" })); //For FCC testing purposes only
