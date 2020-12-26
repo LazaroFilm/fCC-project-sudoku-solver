@@ -8,14 +8,14 @@ module.exports = function (app) {
   app.route("/api/check").post((req, res) => {
     console.log("_____POST/solve_____");
     console.log("req.body:", req.body);
-    const puzzle = req.body.puzzle;
-    solver(puzzle).validate;
     res.json({ test: "works!" });
   });
 
   app.route("/api/solve").post((req, res) => {
     console.log("_____POST/solve_____");
     console.log("req.body:", req.body);
+    const puzzle = req.body.puzzle;
+    solver(puzzle).validate;
     res.json({ test: "Let's solve this!" });
   });
 };
