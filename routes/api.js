@@ -15,7 +15,7 @@ module.exports = function (app) {
     console.log("_____POST/solve_____");
     console.log("req.body:", req.body);
     const puzzle = req.body.puzzle;
-    solver(puzzle).validate;
+    solver.validate(puzzle);
     res.json({ test: "Let's solve this!" });
   });
 };
