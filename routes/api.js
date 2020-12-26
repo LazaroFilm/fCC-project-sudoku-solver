@@ -7,7 +7,7 @@ module.exports = function (app) {
 
   app.route("/api/check").post((req, res) => {
     console.log("_____POST_____");
-    console.log("res:", res);
+    console.log("res:", res.body);
   });
 
   app.route("/api/solve").post((req, res) => {});
