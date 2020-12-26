@@ -6,10 +6,14 @@ module.exports = function (app) {
   let solver = new SudokuSolver();
 
   app.route("/api/check").post((req, res) => {
-    console.log("_____POST_____");
-    console.log("req:", req.body);
+    console.log("_____POST/solve_____");
+    console.log("req.body:", req.body);
     res.json({ test: "works!" });
   });
 
-  app.route("/api/solve").post((req, res) => {});
+  app.route("/api/solve").post((req, res) => {
+    console.log("_____POST/solve_____");
+    console.log("req.body:", req.body);
+    res.json({ test: "Let's solve this!" });
+  });
 };
