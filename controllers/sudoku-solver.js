@@ -2,9 +2,8 @@ class SudokuSolver {
   validate(puzzleString) {
     console.log("validating:");
     try {
-      if (!puzzleString.match(/^[\d.]{81}$/)) {
-        throw "invalid Sudoku string";
-      }
+      if (!puzzleString.match(/^[\d.]{81}$/)) throw "invalid Sudoku string";
+      return puzzleString;
     } catch (err) {
       console.log(err);
     }
