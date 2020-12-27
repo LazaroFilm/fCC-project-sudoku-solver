@@ -30,7 +30,7 @@ module.exports = function (app) {
           console.log(`Square ${col}:${row} => ${num}`);
           sudokuGrid[row][col] = num;
           // solver.validate([col, row]);
-          charPosition++;
+          numberPosition++;
         }
       }
       console.log(sudokuGrid);
