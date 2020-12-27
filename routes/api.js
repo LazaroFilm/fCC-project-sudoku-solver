@@ -20,13 +20,20 @@ module.exports = function (app) {
 
     if (!puzzleString.match(/^[\d.]{81}$/)) throw "invalid Sudoku string";
     else {
+      let charPosition = 0;
+      let sudokuGrid = {};
       for (let row = 1; row <= 9; row++) {
         // console.log("row:", row)
-        for (let col = 1; col <= 9; col++) {
-          console.log("Square:", row, letter[col]);
+        for (let colNum = 1; colNum <= 9; colNum++) {
+          const col = letter[colNum];
+          const num = puzzleString[NumberPosition];
+          console.log(`Square ${col}:${row} => ${num}`);
+          sudokuGrid[row][col] = num;
           // solver.validate([col, row]);
+          charPosition++;
         }
       }
+      console.log(sudokuGrid);
     }
 
     res.json({ test: "Let's solve this!" });
