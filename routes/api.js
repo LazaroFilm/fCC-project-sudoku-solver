@@ -16,7 +16,7 @@ module.exports = function (app) {
   app.route("/api/solve").post((req, res) => {
     console.log("_____POST/solve_____");
     console.log("req.body:", req.body);
-    const puzzle = req.body.puzzle;
+    const puzzleString = req.body.puzzle;
 
     if (!puzzleString.match(/^[\d.]{81}$/)) throw "invalid Sudoku string";
     else {
