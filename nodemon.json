@@ -1,6 +1,4 @@
 {
-  "verbose": true,
-  "events": {
-    "start": "cls || clear"
-  }
+  "ignore": [".git", "node_modules/**/node_modules"],
+  "verbose": true
 }
