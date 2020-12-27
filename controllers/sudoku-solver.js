@@ -1,14 +1,9 @@
 class SudokuSolver {
   validate(puzzleString) {
     console.log("validating:");
-    try {
-      if (!puzzleString.match(/^[\d.]{81}$/)) throw "invalid Sudoku string";
-
-      return true;
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
+    // check for row, then col, the reg.
+    // if all clears, return value
+    // if multiple possibilities, return array of numbers
   }
 
   checkRowPlacement(puzzleString, row, column, value) {}
