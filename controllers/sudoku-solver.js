@@ -8,56 +8,51 @@ class SudokuSolver {
     const rowBump = (row - 1) * 9;
     const pos = column + rowBump;
     const fullRow = puzzleString.slice(rowBump, rowBump + 9);
-    if (!fullRow.includes(value)) {
-      return value;
-    } else {
-      return false;
-    }
+    return fullRow.includes(value) ? false : true;
   }
 
   checkColPlacement(puzzleString, row, column, value) {
-    // not sure how to do this:
     const rowBump = (row - 1) * 9;
     const pos = column + rowBump;
-    const fullRow = puzzleString.slice(rowBump, rowBump + 9);
-    if (!fullRow.includes(value)) {
-      return value;
-    } else {
-      return false;
+    let fullColumn = "";
+    for (let i = 0; i <= 8; i++) {
+      const iBump = (i - 1) * 9;
+      fullColumn += puzzleString[iBump + column];
     }
+    console.log(`col: ${column} -- ${fullColumn} -- ${value}`);
+    return fullColumn.includes(value) ? false : true;
   }
 
-  checkRegionPlacement(puzzleString, row, column, value) {}
+  checkRegionPlacement(puzzleString, row, column, value) {
+    return true;
+  }
 
   solve(puzzleString) {
     for (let row = 1; row <= 9; row++) {
       for (let column = 1; column <= 9; column++) {
         console.log("_____");
-        let possible = [];
+        let possibleRow = [];
+        let possibleColumn = [];
         for (let value = 1; value <= 9; value++) {
           // Checking row
-          let checkRow = this.checkRowPlacement(
-            puzzleString,
-            row,
-            column,
-            value
-          );
-          if (checkRow) {
-            let checkColumn = this.checkColPlacement(
-              puzzleString,
-              row,
-              column,
-              value
-            );
-            if (checkColumn) {
-              possible.push(checkColumn);
+          if (this.checkRowPlacement(puzzleString, row, column, value)) {
+            // console.log(value);
+            possibleRow.push(value);
+            if (this.checkColPlacement(puzzleString, row, column, value)) {
+              possibleColumn.push(value);
+              if (this.checkRegionPlacement(puzzleString, row, column, value)) {
+                // possible.push(value);
+                //if only one number left in possible,
+                // add it to the puzzleString
+              }
             }
           }
-          // Checking Column
         }
         const letter = ["0", "A", "B", "C", "D", "E", "F", "G", "H", "I"];
         const col = letter[column];
-        console.log(`Square ${col}:${row} => ${possible}`);
+        console.log(
+          `Square ${col}:${row} => Row: ${possibleRow} Column: ${possibleColumn}`
+        );
       }
     }
   }
