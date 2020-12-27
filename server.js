@@ -9,7 +9,7 @@ const apiRoutes = require("./routes/api.js");
 const runner = require("./test-runner");
 
 const app = express();
-
+// console.clear();
 console.log("Hello World");
 
 app.use("/public", express.static(process.cwd() + "/public"));
@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Index page (static HTML)
 app.route("/").get(function (req, res) {
+  req.headers["Bypass-Tunnel-Reminder"] = true;
   res.sendFile(process.cwd() + "/views/index.html");
 });
 

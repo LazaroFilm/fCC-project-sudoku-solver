@@ -23,14 +23,15 @@ module.exports = function (app) {
       let numberPosition = 0;
       let sudokuGrid = {};
       for (let row = 1; row <= 9; row++) {
+        sudokuGrid[row] = {};
         // console.log("row:", row)
         for (let colNum = 1; colNum <= 9; colNum++) {
           const col = letter[colNum];
           const num = puzzleString[numberPosition];
           // console.log("num:", num);
           console.log(`Square ${col}:${row} => ${num}`);
-          // sudokuGrid = num;
-          console.log("grid:", sudokuGrid);
+          sudokuGrid[row][col] = num;
+          // console.log("grid:", sudokuGrid);
           // solver.validate([col, row]);
           numberPosition++;
         }
