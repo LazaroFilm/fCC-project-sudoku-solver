@@ -18,7 +18,8 @@ module.exports = function (app) {
     console.info(info("_____POST/solve_____"));
     const puzzleString = req.body.puzzle;
     console.log("puzzle:", puzzleString);
-    if (solver.validate(puzzleString)) solver.solve(puzzleString);
-    else console.error(error("bad puzzle string"));
+    if (solver.validate(puzzleString)) {
+      res.json({ solution: solver.solve(puzzleString) });
+    } else console.error(error("bad puzzle string"));
   });
 };
