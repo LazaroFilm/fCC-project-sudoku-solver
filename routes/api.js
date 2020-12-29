@@ -36,7 +36,6 @@ module.exports = function (app) {
       const puzzleString = req.body.puzzle;
       const error = solver.validate(puzzleString);
       if (error) throw error;
-
       let conflict = [];
       if (!solver.checkRowPlacement(puzzleString, row, column, value)) {
         conflict.push("row");
