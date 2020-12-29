@@ -1,3 +1,6 @@
+const consoleLog = (...message) => {
+  if (process.env.COMMENTS == "true") console.log(...message);
+};
 class SudokuSolver {
   validate(puzzleString) {
     try {
@@ -21,11 +24,11 @@ class SudokuSolver {
   }
 
   checkColPlacement(puzzleString, row, column, value) {
+    // generating the column of known numbers
     let fullColumn = "";
     for (let c = 0; c <= 8; c++) {
       const cBump = c * 9;
       const cNum = cBump + column;
-      // generating the column of known numbers
       fullColumn += puzzleString[cNum];
     }
     // does the column already contain the value?
@@ -63,6 +66,7 @@ class SudokuSolver {
     let passes = 0;
     let done = false;
     let prevPuzzleString = "";
+    consoleLog(puzzleString);
     while (!done) {
       // checking for each row and column
       for (let row = 0; row < 9; row++) {
@@ -95,7 +99,7 @@ class SudokuSolver {
             puzzleArray[position] = possibleRegion[0];
             puzzleString = puzzleArray.join("");
             // displaying the beautiful solving process
-            console.log(puzzleString);
+            consoleLog(puzzleString);
           }
         }
       }
