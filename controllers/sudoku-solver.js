@@ -6,6 +6,7 @@ class SudokuSolver {
         return "Expected puzzle to be 81 characters long";
       if (!puzzleString.match(/^[\d.]{81}$/))
         return "Invalid characters in puzzle";
+      return false;
     } catch (err) {
       return err;
     }
