@@ -37,12 +37,13 @@ app.use(function (req, res, next) {
 //Start our server and tests!
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
+  console.clear();
   console.log("Listening on port " + PORT);
   // process.env.NODE_ENV='test'
   if (process.env.COMMENTS === "true") {
-    console.log("comments:", true);
+    console.log("Comments:", true);
   } else {
-    console.log("comments:", false);
+    console.log("Comments:", false);
   }
   if (process.env.NODE_ENV === "test") {
     console.log("Running Tests...");
