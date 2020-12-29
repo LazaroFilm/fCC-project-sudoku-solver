@@ -1,14 +1,21 @@
-const chalk = require("chalk");
-
 class SudokuSolver {
   validate(puzzleString) {
-    if (puzzleString.match(/^[\d.]{81}$/)) return true;
-    else return false;
+    try {
+      if (!puzzleString) return "Required field missing";
+      if (puzzleString.length != 81)
+        return "Expected puzzle to be 81 characters long";
+      if (!puzzleString.match(/^[\d.]{81}$/))
+        return "Invalid characters in puzzle";
+    } catch (err) {
+      return err;
+    }
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
     const rBump = row * 9;
+    // generating the row of known numbers
     const fullRow = puzzleString.slice(rBump, rBump + 9);
+    // does the row already contain the value?
     return fullRow.includes(value) ? false : true;
   }
 
@@ -17,12 +24,15 @@ class SudokuSolver {
     for (let c = 0; c <= 8; c++) {
       const cBump = c * 9;
       const cNum = cBump + column;
+      // generating the column of known numbers
       fullColumn += puzzleString[cNum];
     }
+    // does the column already contain the value?
     return fullColumn.includes(value) ? false : true;
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
+    // hard coded regions
     const regions = {
       0: [0, 1, 2, 9, 10, 11, 18, 19, 20],
       1: [3, 4, 5, 12, 13, 14, 21, 22, 23],
@@ -35,6 +45,7 @@ class SudokuSolver {
       8: [60, 61, 62, 69, 70, 71, 78, 79, 80],
     };
     const position = column + row * 9;
+    // generating the region of known numbers
     let fullRegion = "";
     for (const region in regions) {
       if (regions[region].includes(position)) {
@@ -43,6 +54,7 @@ class SudokuSolver {
         });
       }
     }
+    // does the region already contain the value?
     return fullRegion.includes(value) ? false : true;
   }
 
@@ -51,16 +63,17 @@ class SudokuSolver {
     let done = false;
     let prevPuzzleString = "";
     while (!done) {
+      // checking for each row and column
       for (let row = 0; row < 9; row++) {
         for (let column = 0; column < 9; column++) {
           let possibleRow = [];
           let possibleColumn = [];
           let possibleRegion = [];
-          const letter = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-          const col = letter[column];
           const position = column + row * 9;
+          // testing only for "."
           if (puzzleString[position] == ".") {
             for (let value = 1; value <= 9; value++) {
+              // thinning out the possible numbers
               if (this.checkRowPlacement(puzzleString, row, column, value)) {
                 possibleRow.push(value);
                 if (this.checkColPlacement(puzzleString, row, column, value)) {
@@ -74,22 +87,20 @@ class SudokuSolver {
               }
             }
           }
-
+          // add the answer when only one possible number is left
           if (possibleRegion.length == 1) {
             let puzzleArray = puzzleString.split("");
             position = column + row * 9;
-            // console.log(
-            //   chalk.bold.cyan(
-            //     `swapping ${puzzleArray[position]} to ${possibleRegion[0]} at ${col}${row}`
-            //   )
-            // );
             puzzleArray[position] = possibleRegion[0];
             puzzleString = puzzleArray.join("");
-            console.log("puzzleString:", puzzleString);
+            // displaying the beautiful solving process
+            console.log(puzzleString);
           }
         }
       }
-      // checks if the puzzle is solved and under 10 passes.
+      // stop solving if all numbers are found
+      // or if no new numbers are found
+      // of if we tried it 100 times (to avoid infinite loop)
       if (
         !puzzleString.includes(".") ||
         puzzleString == prevPuzzleString ||
@@ -97,12 +108,10 @@ class SudokuSolver {
       ) {
         done = true;
       } else {
-        console.log("one more pass:", passes + 1);
         prevPuzzleString = puzzleString;
         passes++;
       }
     }
-    console.log("DONE         ", puzzleString);
     return puzzleString;
   }
 }

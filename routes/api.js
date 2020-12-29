@@ -12,6 +12,7 @@ module.exports = function (app) {
   app.route("/api/check").post((req, res) => {
     console.info(info("_____POST/check_____"));
     console.log("req.body:", req.body);
+
     res.json({ error: "work in progress" });
     // solve the puzzle, then if it matches, good
     // if it doesn't match check each row, col reg for
@@ -22,11 +23,8 @@ module.exports = function (app) {
     console.info(info("_____POST/solve_____"));
     try {
       const puzzleString = req.body.puzzle;
-      if (!puzzleString) throw "Required field missing";
-      console.log("puzzle:", puzzleString);
-      if (puzzleString.length != 81)
-        throw "Expected puzzle to be 81 characters long";
-      if (!solver.validate(puzzleString)) throw "Invalid characters in puzzle";
+      const error = solver.validate(puzzleString);
+      if (error) throw error;
       const solution = solver.solve(puzzleString);
       if (solution.includes(".")) throw "Puzzle cannot be solved";
       res.json({ solution });
