@@ -21,6 +21,7 @@ module.exports = function (app) {
 
   app.route("/api/check").post((req, res) => {
     consoleInfo("_____POST/check_____");
+    // req.body => {puzzle, coordinate, value}
     consoleLog("req.body:", req.body);
     try {
       if (!req.body.coordinate || !req.body.value)
@@ -68,6 +69,8 @@ module.exports = function (app) {
 
   app.route("/api/solve").post((req, res) => {
     consoleInfo("_____POST/solve_____");
+    // req.body => {puzzle}
+    consoleLog(req.body);
     try {
       // checking for errors
       const puzzleString = req.body.puzzle;
