@@ -6,12 +6,22 @@ const chalk = require("chalk");
 const red = chalk.bold.red;
 const blue = chalk.bold.blue;
 
+const consoleLog = (...message) => {
+  if (process.env.COMMENTS == "true") console.log(...message);
+};
+const consoleInfo = (...message) => {
+  if (process.env.INFOS == "true") console.info(blue(...message));
+};
+const consoleError = (...message) => {
+  if (process.env.ERRORS == "true") console.error(red(...message));
+};
+
 module.exports = function (app) {
   let solver = new SudokuSolver();
 
   app.route("/api/check").post((req, res) => {
-    console.info(blue("_____POST/check_____"));
-    console.log("req.body:", req.body);
+    consoleInfo("_____POST/check_____");
+    consoleLog("req.body:", req.body);
     try {
       if (!req.body.coordinate || !req.body.value)
         throw "Required field(s) missing";
@@ -48,16 +58,16 @@ module.exports = function (app) {
       }
       const response =
         conflict.length == 0 ? { valid: true } : { valid: false, conflict };
-      console.log(response);
+      consoleLog(response);
       res.json(response);
     } catch (error) {
-      console.error(red(`error: ${error}`));
+      consoleError(`error: ${error}`);
       res.json({ error });
     }
   });
 
   app.route("/api/solve").post((req, res) => {
-    console.info(blue("_____POST/solve_____"));
+    consoleInfo("_____POST/solve_____");
     try {
       // checking for errors
       const puzzleString = req.body.puzzle;
@@ -70,7 +80,7 @@ module.exports = function (app) {
       // send it!
       res.json({ solution });
     } catch (err) {
-      console.error(red(`error: ${err}`));
+      consoleError(`error: ${err}`);
       res.json({ error: err });
     }
   });
